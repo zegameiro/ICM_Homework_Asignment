@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark(
         useMaterial3: true,
-        
       ),
       home: const NavigationBarExample(),
     );
