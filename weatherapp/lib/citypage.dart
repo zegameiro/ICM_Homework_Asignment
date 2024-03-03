@@ -223,6 +223,14 @@ class CityPage extends StatelessWidget {
               ],
             ),
           ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: FloatingActionButton(
+              onPressed: (){},
+              backgroundColor: Colors.deepPurple,
+              child: Icon(Icons.add),
+            ),
+          )
         ],
       ),
     );
