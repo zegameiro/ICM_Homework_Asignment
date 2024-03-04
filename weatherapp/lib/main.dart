@@ -2,56 +2,71 @@ import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'citypage.dart';
 import 'settingspage.dart';
-// https://github.com/darkmoonight/Rain/tree/main
 
 void main() {
-  runApp(const MyApp());
+ runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+ const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
+ @override
+ _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+ ThemeMode _themeMode = ThemeMode.dark;
+
+ void _toggleThemeMode() {
+    setState(() {
+      _themeMode = _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    });
+ }
+
+ @override
+ Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark(
-        useMaterial3: true,
-      ),
-      home: const NavigationBarExample(),
+      theme: ThemeData.light().copyWith(),
+      darkTheme: ThemeData.dark().copyWith(),
+      themeMode: _themeMode,
+      home: NavigationBarExample(toggleThemeMode: _toggleThemeMode),
     );
-  }
+ }
 }
 
 class NavigationBarExample extends StatefulWidget {
-  const NavigationBarExample({super.key});
+ final VoidCallback toggleThemeMode;
 
-  @override
-  State<NavigationBarExample> createState() => _NavigationBarExampleState();
+ const NavigationBarExample({super.key, required this.toggleThemeMode});
+
+ @override
+ NavigationBarExampleState createState() => NavigationBarExampleState();
 }
 
-class _NavigationBarExampleState extends State<NavigationBarExample> {
-  int currentPageIndex = 0;
+class NavigationBarExampleState extends State<NavigationBarExample> {
+ int currentPageIndex = 0;
 
-  @override
-  Widget build(BuildContext context) {
+ @override
+ Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.location_city),
         title: Text("Moscow"),
         centerTitle: true,
         actions: <Widget>[
-          Icon(Icons.search)
+          IconButton(
+            icon: Icon(Theme.of(context).brightness == Brightness.dark ? Icons.brightness_2 : Icons.sunny),
+            onPressed: widget.toggleThemeMode,
+          ),
+          Icon(Icons.search),
         ],
       ),
-
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
           });
         },
-
         indicatorColor: Colors.deepPurpleAccent,
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
@@ -70,7 +85,7 @@ class _NavigationBarExampleState extends State<NavigationBarExample> {
           ),
         ],
       ),
-      body: SingleChildScrollView( 
+       body: SingleChildScrollView( 
         child: <Widget>[
 
           /// Home page
@@ -85,7 +100,5 @@ class _NavigationBarExampleState extends State<NavigationBarExample> {
         ][currentPageIndex],
         )
     );
-  }
+ }
 }
-
-
