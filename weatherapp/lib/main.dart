@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
-import 'citypage.dart';
-import 'settingspage.dart';
+import 'pages/homepage.dart';
+import 'pages/citypage.dart';
+import 'pages/settingspage.dart';
 
 void main() {
  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
- const MyApp({Key? key}) : super(key: key);
+ const MyApp({super.key});
 
  @override
- _MyAppState createState() => _MyAppState();
+ MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
  ThemeMode _themeMode = ThemeMode.dark;
 
  void _toggleThemeMode() {
@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData.dark().copyWith(),
       themeMode: _themeMode,
       home: NavigationBarExample(toggleThemeMode: _toggleThemeMode),
+      debugShowCheckedModeBanner: false,
     );
  }
 }
@@ -100,5 +101,5 @@ class NavigationBarExampleState extends State<NavigationBarExample> {
         ][currentPageIndex],
         )
     );
- }
+  }
 }
